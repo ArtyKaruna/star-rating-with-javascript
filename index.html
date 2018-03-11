@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Best Android phone 2018 rating</title>
+    <style>
+       .stars-outer {
+           position: relative;
+           display: inline-block;
+       } 
+
+       .stars-inner {
+           position: absolute;
+           top: 0;
+           left: 0;
+           white-space: nowrap;
+           overflow: hidden;
+           width: 0;
+       }
+
+       .stars-outer::before {
+           content: "\f005 \f005 \f005 \f005 \f005";
+           font-family: 'Font Awesome 5 Free';
+           font-weight: 900;
+           color: #ccc;
+       }
+       .stars-inner::before {
+           content: "\f005 \f005 \f005 \f005 \f005";
+           font-family: 'Font Awesome 5 Free';
+           font-weight: 900;
+           color: rgb(228, 214, 27);
+       }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="form-group">
+    <select id="product-select" class="form-control custom-select">
+    <option value="0" disabled selected>Select Product</option>
+    <option value="samsung">Galaxy S9+</option>
+    <option value="huawei">Honor 10</option>
+    <option value="google">Google Pixel 2</option>
+    <option value="apple">Iphone 8+</option>
+    <option value="oneplus">OnePlus 6</option>  </select>
+    </div>
+    <div class="form-group">
+      <input type="number" id="rating-control" class="form-control" step="0.1" max="5" placeholder="Rate 1 - 5" disabled>  
+    </div>
+
+    <table class="table table-striped">
+    <thead>
+    <tr>
+    <th>Best android phone 2018</th>
+    <th>Rating</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="samsung">
+    <td>Galaxy S9+</td>
+    <td>
+    <div class="stars-outer">
+    <div class="stars-inner"></div>
+    </div>
+    <span class="number-rating"></span>
+    </td>
+    </tr>
+    <tr class="huawei">
+    <td>Honor 10</td>
+    <td>
+    <div class="stars-outer">
+    <div class="stars-inner"></div>
+    </div>
+    <span class="number-rating"></span>
+    </td>
+    </tr>
+    <tr class="google">
+    <td>Google Pixel 2</td>
+    <td>
+    <div class="stars-outer">
+    <div class="stars-inner"></div>
+    </div>
+    <span class="number-rating"></span>
+    </td>
+    </tr>
+    <tr class="apple">
+    <td>Iphone 8+</td>
+    <td>
+    <div class="stars-outer">
+    <div class="stars-inner"></div>
+    </div>
+    <span class="number-rating"></span>
+    </td>
+    </tr>
+    <tr class="oneplus">
+    <td>OnePlus 6</td>
+    <td>
+    <div class="stars-outer">
+    <div class="stars-inner"></div>
+    </div>
+    <span class="number-rating"></span>
+    </td>
+    </tr>
+    </tbody>
+    </table>
+</div>
+
+    <script>
+        // Initial Ratings
+        const ratings = {
+            samsung: 4.7,
+            apple: 4.4,
+            oneplus: 4.1,
+            google: 4.3,
+            huawei: 4.1
+        }
+        
+        // Total stars
+        const starsTotal = 5;
+
+        // Run getRatings when DOM loads
+        document.addEventListener('DOMContentLoaded', getRatings);
+
+        // Form Elements
+        const productSelect = document.getElementById('product-select');
+        const ratingControl = document.getElementById('rating-control');
+
+        // Initialize
+        let product;
+
+        // Product select change
+        productSelect.addEventListener('change', (e) => {
+        product = e.target.value;
+
+        // Enable rating control
+        ratingControl.disabled = false;
+        ratingControl.value = ratings[product];
+        });
+
+        // Rating control
+        ratingControl.addEventListener('blur', (e) => {
+         const rating = e.target.value;
+
+         // Make sure 5 or under
+         if(rating > 5) {
+             alert('Please rate 1 - 5');
+             return;
+         }
+          
+        // Change ratings
+         ratings[product] = rating;
+
+         getRatings();
+        }); 
+
+        // Get ratings
+        function getRatings() {
+            for (let rating in ratings) {
+             // Get percentage
+           const starPercentage = (ratings[rating] / starsTotal) * 100;
+           
+           // Round to nearest 10
+           const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
+
+          // Set width of stars-inner to percentage
+          document.querySelector(`.${rating} .stars-inner`).style.width = starPercentageRounded;
+
+          // Add number rating
+          document.querySelector(`.${rating} .number-rating`).innerHTML = ratings[rating];
+
+         }
+        }
+    </script>
+
+</body>
+</html>
